@@ -31,13 +31,15 @@ def get_wan_status(password, username="admin"):
             tn.write(b"nvram get wan0_ipaddr\n")
             tn.read_until(b"\n")
             wan0_ipaddr = tn.read_until(b"\n").decode("utf-8").strip()
-            result.append(wan0_ipaddr)
+            if wan0_ipaddr != "0.0.0.0":
+                result.append(wan0_ipaddr)
 
         if wan1_enable != 0:
             tn.write(b"nvram get wan1_ipaddr\n")
             tn.read_until(b"\n")
             wan1_ipaddr = tn.read_until(b"\n").decode("utf-8").strip()
-            result.append(wan1_ipaddr)
+            if wan1_ipaddr != "0.0.0.0":
+                result.append(wan1_ipaddr)
 
         result.sort()
         return result
